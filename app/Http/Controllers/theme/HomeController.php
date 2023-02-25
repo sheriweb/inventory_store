@@ -5,10 +5,14 @@ namespace App\Http\Controllers\theme;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Store;
 use App\Services\admin\CategoryService;
 use App\Services\OrderService;
 use App\Services\theme\HomeService;
 use http\Env\Response;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
@@ -21,23 +25,26 @@ class HomeController extends Controller
     public function __construct(CategoryService $categoryService, HomeService $homeService, CartService $cartService)
     {
         $this->categoryService = $categoryService;
-        $this->homeService = $homeService;
-        $this->cartService = $cartService;
+        $this->homeService     = $homeService;
+        $this->cartService     = $cartService;
     }
 
-    public function index()
+    /**
+     * @return Application|Factory|View
+     */
+    public function index(): View|Factory|Application
     {
-        $data = [];
-        $data['categories'] = $this->categoryService->getCategories(1);
-        // dd($data['categories']);
-        $data['categoryTree'] = Category::get()->toTree();
-        $data['featureProduct'] = $this->homeService->getHomeProducts('featureProductSection', 1);
-        $data['newProduct'] = $this->homeService->getHomeProducts('newProductSection', 1);
-        $data['dealOfTheDay'] = $this->homeService->getHomeProducts('dealOfTheDaySection', 1);
+        $data                          = [];
+        $data['stores']                = Store::all();
+        $data['categories']            = $this->categoryService->getCategories(1);
+        $data['categoryTree']          = Category::get()->toTree();
+        $data['featureProduct']        = $this->homeService->getHomeProducts('featureProductSection', 1);
+        $data['newProduct']            = $this->homeService->getHomeProducts('newProductSection', 1);
+        $data['dealOfTheDay']          = $this->homeService->getHomeProducts('dealOfTheDaySection', 1);
         $data['featureProductHeader1'] = $this->homeService->getLimitedHomeProducts('featureHeaderSection', 1, 2);
         $data['featureProductHeader2'] = $this->homeService->getLimitedHomeProducts('featureHeaderSection', 1, 3);
-        $data['homeCategories'] = $this->homeService->getHomecategories();
-//        return $data['homeCategories'];
+        $data['homeCategories']        = $this->homeService->getHomecategories();
+
         return view('new-user-site.dashboard', compact('data'));
     }
 

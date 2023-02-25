@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Class Store
  * @package App\Models
  * @property string name
+ * @property string store_image
+ * @property string store_thumbnail
  */
 class Store extends Model
 {
@@ -19,7 +21,9 @@ class Store extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name'
+        'name',
+        'store_image',
+        'store_thumbnail'
     ];
 
     /**

@@ -14,7 +14,9 @@ class StoreSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'store_image' => 'required_if:store_id,null|mimes:jpeg,png,jpg,gif|max:2048',
+            'store_thumbnail' => 'required_if:store_id,null|mimes:jpeg,png,jpg,gif'
         ];
     }
 }

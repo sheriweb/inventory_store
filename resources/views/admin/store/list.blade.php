@@ -81,14 +81,26 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="store_form" class="needs-validation">
+                    <form id="store_form" class="needs-validation" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="store_id" id="store_id">
                         <div class="form">
                             <div class="form-group">
                                 <label for="validationCustom01" class="mb-1">Store Name :</label>
                                 <input name="name" class="form-control" id="name" type="text">
-                                <span id="error_name" class="text-danger error_name clear-error"></span>
+                                <span id="name_error" class="text-danger clear-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="validationCustom02" class="mb-1">Store Image :</label>
+                                <input name="store_image" class="form-control" id="store_image" type="file">
+                                <span id="store_image_error" class="text-danger clear-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="validationCustom02" class="mb-1">Store Thumbnail:</label>
+                                <input name="store_thumbnail" class="form-control" id="store_thumbnail" type="file">
+                                <span id="store_thumbnail_error" class="text-danger clear-error"></span>
                             </div>
                         </div>
                     </form>

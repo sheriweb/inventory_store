@@ -22,12 +22,12 @@ $(document).ready(function () {
                     window.location.reload()
                 }
             },
-            error: function (response) {
-                // Something went wrong
-                // HERE you can handle asynchronously the response
-                var errors = data.responseJSON;
-
-                showErrors(errors);
+            error: function (reject) {
+                var response = $.parseJSON(reject.responseText);
+                $.each(response.errors, function (key, val) {
+                    console.log(val[0])
+                    $("#" + key + "_error").text(val[0]);
+                });
             }
         });
     })
